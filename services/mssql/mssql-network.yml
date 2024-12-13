@@ -1,0 +1,9 @@
+networks:
+  mssql_network:
+    name: mssql_network
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.2.0/24
+          gateway: 10.1.2.1

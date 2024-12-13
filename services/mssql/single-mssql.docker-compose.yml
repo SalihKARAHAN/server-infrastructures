@@ -1,0 +1,42 @@
+name: "mssql"
+
+volumes:
+  mssql_single_data_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ../../volumes/single_mssql/var/opt/mssql/data
+  mssql_single_log_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ../../volumes/single_mssql/var/opt/mssql/log
+  mssql_single_backup_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ../../volumes/single_mssql/var/opt/mssql/backup
+
+services:
+  single_mssql:
+    container_name: single_mssql
+    hostname: single_mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      TZ: Europe/Istanbul
+      SA_PASSWORD: "Password123!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_COLLATION: Turkish_CS_AS
+    volumes:
+      - mssql_single_data_volume:/var/opt/mssql/data
+      - mssql_single_log_volume:/var/opt/mssql/log
+      - mssql_single_backup_volume:/var/opt/mssql/backup
+    networks:
+      mssql_network:
+        ipv4_address: 10.1.2.2
+    ports:
+      - "1433:1433"
