@@ -1,0 +1,12 @@
+services:
+  single_redis:
+    image: redis/redis-stack-server:7.4.0-v1@sha256:72035434f455ecd897090d3dd83ec357d34857287f159378b965a7006312a797
+    container_name: single_redis
+    environment:
+      TZ: Europe/Istanbul
+      REDIS_ARGS: "--requirepass Password123!"
+    networks:
+      redis_network:
+        ipv4_address: "10.1.4.2"
+    ports:
+      - "6379:6379"

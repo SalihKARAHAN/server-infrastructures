@@ -1,0 +1,8 @@
+networks:
+  redis_network:
+    name: redis_network
+    driver: "bridge"
+    ipam:
+      config:
+        - subnet: "10.1.4.0/24"
+          gateway: "10.1.4.1"
