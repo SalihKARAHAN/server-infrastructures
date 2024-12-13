@@ -1,0 +1,41 @@
+name: "mongodb"
+
+volumes:
+  single_mongodb_db_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ../../volumes/single_mongodb/data/db
+  single_mongodb_configdb_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ../../volumes/single_mongodb/data/configdb
+  single_mongodb_log_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ../../volumes/single_mongodb/var/log/mongodb
+      
+services:
+  single_mongodb:
+    container_name: single_mongodb
+    hostname: single_mongodb
+    image:  mongodb/mongodb-community-server:8.0.0-ubuntu2204@sha256:ac164e0bf560c2c0a417818b06acb93f4969336b04865789ab3d5314b1caa30d
+    environment:
+      TZ: Europe/Istanbul
+      MONGODB_INITDB_ROOT_USERNAME: "root"
+      MONGODB_INITDB_ROOT_PASSWORD: "Password123!"
+      MONGODB_INITDB_DATABASE: "admin"
+    volumes:
+      - single_mongodb_db_volume:/data/db
+      - single_mongodb_configdb_volume:/data/configdb
+      - single_mongodb_log_volume:/var/log/mongodb
+    networks:
+      mongodb_network:
+        ipv4_address: 10.1.1.2
+    ports:
+      - "27017:27017"

@@ -1,0 +1,8 @@
+networks:
+  mongodb_network:
+    name: mongodb_network
+    driver: "bridge"
+    ipam:
+      config:
+        - subnet: "10.1.1.0/24"
+          gateway: "10.1.1.1"
