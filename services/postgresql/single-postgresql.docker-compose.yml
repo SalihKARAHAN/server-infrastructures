@@ -1,0 +1,24 @@
+name: "postgresql"
+
+volumes:
+  single_postgresql_data_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ..\..\volumes\single_postgresql\var\lib\postgresql\data
+
+services:
+  single_postgresql:
+    image: postgres:17.2-alpine3.20@sha256:e7897baa70dae1968d23d785adb4aeb699175e0bcaae44f98a7083ecb9668b93
+    container_name: single_postgresql
+    environment:
+      TZ: Europe/Istanbul
+      POSTGRES_PASSWORD: "Password123!"
+    volumes:
+      - single_postgresql_data_volume:/var/lib/postgresql/data
+    networks:
+      postgresql_network:
+        ipv4_address: "10.1.0.2"
+    ports:
+      - 5432:5432

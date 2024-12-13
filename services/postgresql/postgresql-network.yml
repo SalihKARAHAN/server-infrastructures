@@ -1,0 +1,8 @@
+networks:
+  postgresql_network:
+    name: postgresql_network
+    driver: "bridge"
+    ipam:
+      config:
+        - subnet: "10.1.0.0/24"
+          gateway: "10.1.0.1"
