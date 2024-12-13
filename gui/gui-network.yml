@@ -1,0 +1,8 @@
+networks:
+  gui_network:
+    name: gui_network
+    driver: "bridge"
+    ipam:
+      config:
+        - subnet: "10.255.0.0/24"
+          gateway: "10.255.0.1"

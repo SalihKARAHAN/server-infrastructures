@@ -1,0 +1,26 @@
+name: "pgadmin"
+
+volumes:
+  pgadmin_ui_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ..\volumes\pgadmin-ui\var\lib\pgadmin
+
+services:
+  pgadmin-ui:
+    image: dpage/pgadmin4:8.14.0@sha256:8a68677a97b8c8d1427dc915672a26d2c4a04376916a68256f53d669d6171be7
+    container_name: pgadmin-ui
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@local.host
+      PGADMIN_DEFAULT_PASSWORD: Password123!
+      CHECK_EMAIL_DELIVERABILITY: false
+      ALLOW_SPECIAL_EMAIL_DOMAINS: '[]'
+    volumes:
+      - pgadmin_ui_volume:/var/lib/pgadmin
+    networks:
+      gui_network:
+        ipv4_address: 10.255.0.2
+    ports:
+      - 15432:80
